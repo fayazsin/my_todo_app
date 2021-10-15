@@ -63,10 +63,7 @@ input[type="text"] {
   display: flex;
   align-items: center;
 }
-.todo-completed {
-  display: flex;
-  margin: 10px 0;
-}
+
 .todo-actions {
   display: flex;
   justify-content: space-between;

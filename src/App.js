@@ -1,6 +1,6 @@
 import './App.css';
 
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import TodoList from './todo/TodoList';
 import Todo from './todo/Todo';
 

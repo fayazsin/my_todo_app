@@ -13,29 +13,30 @@ const TodoList = () => {
         const json = JSON.stringify(todos);
         localStorage.setItem("todos", json);
     }, [todos]);
-    function listByState(state) {
-        let updatedTodos = [...todos].filter((todo) => { return todo.state === state })
-            ;
-        setTodos(updatedTodos);
-    }
+    useEffect(() => {
+        let todos = localStorage.getItem('todos');
+        todos = JSON.parse(todos);
+        setTodos(todos);
+    }, []);
     function handleSubmit(e) {
         e.preventDefault();
 
         const newTodo = {
-            id: todos.length + 1,
+            id: Math.floor(Math.random() * 100) + 1,
             title: title,
             description: description,
             state: false,
         };
         setTodos([newTodo, ...todos]);
+        localStorage.setItem("todos", JSON.stringify(newTodo));
         setTitle("");
         setDescription("")
     }
-    //if you wants to add Delete option you can use
-    // function deleteTodo(id) {
-    //     let updatedTodos = [...todos].filter((todo) => todo.id !== id);
-    //     setTodos(updatedTodos);
-    // }
+    // if you wants to add Delete option you can use
+    function deleteTodo(id) {
+        let updatedTodos = [...todos].filter((todo) => todo.id !== id);
+        setTodos(updatedTodos);
+    }
 
     function toggleComplete(id) {
         let updatedTodos = [...todos].map((todo) => {
@@ -72,11 +73,12 @@ const TodoList = () => {
             </form>
 
             {todos.map((todo) => (
-                <div>{todo.state === false && (
-                    <div key={todo.id} className="todo">
+                <div key={todo.id} >{todo.state === false && (
+                    <div className="todo">
 
                         <div className="todo-text">
                             <div className={todo.state ? "completed" : ""}>
+                                <span className="my-3">Checked  </span>
                                 <input
                                     type="checkbox"
                                     id="state"
@@ -90,7 +92,7 @@ const TodoList = () => {
                                     <p className="ml-3">Description :{todo.description}</p>
                                 </span>
                             </div>
-                            {/* <button onClick={() => deleteTodo(todo.id)}> Delete </button> */}
+                            <button onClick={() => deleteTodo(todo.id)}> Delete </button>
                         </div>
 
                     </div>
@@ -99,11 +101,11 @@ const TodoList = () => {
                 </div>))}
 
             {todos.map((todo) => (
-                <div>{todo.state === true && (
-                    <div key={todo.id} className="todo">
+                <div key={todo.id}>{todo.state === true && (
+                    <div className="todo">
 
                         <div className="todo-text">
-                            <div className={todo.state ? "completed" : ""}>
+                            <div className="completed">
                                 <input
                                     type="checkbox"
                                     id="state"
@@ -117,16 +119,17 @@ const TodoList = () => {
                                     <p className="ml-3">Description :{todo.description}</p>
                                 </span>
                             </div>
-                            {/* <button onClick={() => deleteTodo(todo.id)}> Delete </button> */}
+                            <button onClick={() => deleteTodo(todo.id)}> Delete </button>
                         </div>
 
                     </div>
                 )
                 }
-                </div>))}
+                </div>))
+            }
 
 
-        </div>
+        </div >
     );
 }
 
