@@ -1,0 +1,6 @@
+[
+    {"id":1, "title": "PHP", "state": false, "description": "PHP is a general-purpose scripting language geared towards web development. It was originally created by Danish-Canadian programmer Rasmus Lerdorf in 1994. The PHP reference implementation is now produced by The PHP Group"},
+    {"id":2, "title": "JAVA", "state": false, "description": "Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible."},
+    {"id":3, "title": "PHYTON", "state": false, "description": "Python is an interpreted high-level general-purpose programming language. Its design philosophy emphasizes code readability with its use of significant indentation."},
+    {"id":4, "title": "C++", "state": true, "description": "C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or 'C with Classes'. "}
+]
