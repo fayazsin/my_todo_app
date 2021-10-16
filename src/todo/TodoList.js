@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { Link } from 'react-router-dom'
 import data from '../models/Todo.json'
-
+import { Container } from 'bootstrap'
 const TodoList = () => {
 
     const [todos, setTodos] = useState(data);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
-    useEffect(() => {
-        const json = JSON.stringify(todos);
-        localStorage.setItem("todos", json);
-    }, [todos]);
+
     useEffect(() => {
         let todos = localStorage.getItem('todos');
         todos = JSON.parse(todos);
         setTodos(todos);
     }, []);
+
+    useEffect(() => {
+        const json = JSON.stringify(todos);
+        localStorage.setItem("todos", json);
+    }, [todos]);
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -56,6 +58,7 @@ const TodoList = () => {
                 <div>
                     <h4>Title</h4>
                     <input
+                        required
                         type="text"
                         onChange={(e) => setTitle(e.target.value)}
                         value={title}
@@ -75,51 +78,27 @@ const TodoList = () => {
             {todos.map((todo) => (
                 <div key={todo.id} >{todo.state === false && (
                     <div className="todo">
-
                         <div className="todo-text">
-                            <div className={todo.state ? "completed" : ""}>
-                                <span className="my-3">Checked  </span>
-                                <input
-                                    type="checkbox"
-                                    id="state"
-                                    checked={todo.state}
-                                    onChange={() => toggleComplete(todo.id)}
-                                />
-                                <span>
-                                    <Link to={`/list/${todo.id}`}>
-                                        <span><h4 >Title :{todo.title}</h4></span>
-                                    </Link>
-                                    <p className="ml-3">Description :{todo.description}</p>
-                                </span>
+                            <div>
+                                <div >
+                                    <input
+                                        type="checkbox"
+                                        id="state"
+                                        checked={todo.state}
+                                        onChange={() => toggleComplete(todo.id)}
+                                    />
+                                    <span>
+                                        <Link to={`/list/${todo.id}`}>
+                                            <span><h4 >Title :{todo.title}</h4></span>
+                                        </Link>
+                                        <p className="ml-3">Description :{todo.description}</p>
+                                    </span>
+                                </div>
                             </div>
-                            <button onClick={() => deleteTodo(todo.id)}> Delete </button>
-                        </div>
-
-                    </div>
-                )
-                }
-                </div>))}
-
-            {todos.map((todo) => (
-                <div key={todo.id}>{todo.state === true && (
-                    <div className="todo">
-
-                        <div className="todo-text">
-                            <div className="completed">
-                                <input
-                                    type="checkbox"
-                                    id="state"
-                                    checked={todo.state}
-                                    onChange={() => toggleComplete(todo.id)}
-                                />
-                                <span>
-                                    <Link to={`/list/${todo.id}`}>
-                                        <span><h4 >Title :{todo.title}</h4></span>
-                                    </Link>
-                                    <p className="ml-3">Description :{todo.description}</p>
-                                </span>
+                            <div>
+                                <button className="align-left" onClick={() => deleteTodo(todo.id)}> Delete </button>
                             </div>
-                            <button onClick={() => deleteTodo(todo.id)}> Delete </button>
+
                         </div>
 
                     </div>
@@ -128,9 +107,38 @@ const TodoList = () => {
                 </div>))
             }
 
+            {todos.map((todo) => (
+                <div key={todo.id}>{todo.state === true && (
+                    <div className="todo">
+                        <div className="todo-text">
+                            <div>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        id="state"
+                                        checked={todo.state}
+                                        onChange={() => toggleComplete(todo.id)}
+                                    />
+                                </div>
+                                <div className="completed">
+                                    <Link to={`/list/${todo.id}`}>
+                                        <span><h4 >Title :{todo.title}</h4></span>
+                                    </Link>
+                                </div>
+                                <p className="ml-3">Description :{todo.description}</p>
+                            </div>
+                            <div>
+                                <button onClick={() => deleteTodo(todo.id)}> Delete </button>
+                            </div>
 
-        </div >
-    );
+                        </div>
+
+                    </div>
+                )}
+                </div>))
+            }
+        </div>
+    )
 }
 
 export default TodoList;
